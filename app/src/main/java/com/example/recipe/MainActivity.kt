@@ -61,7 +61,7 @@ fun RecipeApp() {
     val navController = rememberNavController()
     Column(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(8.dp)
             .fillMaxSize()
     ) {
 
@@ -96,6 +96,8 @@ val recipes = listOf(
     Recipe("Salad", listOf("Lettuce", "Tomato", "Cucumber"), "Chop vegetables and mix in a bowl.")
 )
 
+val AppBarHeight = 55.dp
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -115,11 +117,11 @@ fun RecipeListScreen(navController: NavHostController) {
     ) {
         Column(
             modifier = Modifier
-                .padding(top = 56.dp)
+                .padding(top = AppBarHeight)
         ) {
             LazyColumn(
                 modifier = Modifier
-                    .padding(10.dp)
+                    .padding(8.dp)
             ) {
                 items(recipes) { recipe ->
                     RecipeListItem(
@@ -174,21 +176,27 @@ fun RecipeDetailScreen(recipe: Recipe) {
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize(),
+                .padding(top = AppBarHeight),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
-            Text(text = "Ingredients")
-            Text(
-                text = recipe.ingredients.joinToString(","),
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Instructions", style = MaterialTheme.typography.bodyMedium)
-            Text(text = recipe.instructions)
+            LazyColumn(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                item {
+                    Text(text = "Ingredients", style = MaterialTheme.typography.bodyLarge)
+                    recipe.ingredients.forEach { ingredient ->
+                        Text(
+                            text = "- $ingredient",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(text = "Instructions", style = MaterialTheme.typography.bodyMedium)
+                    Text(text = recipe.instructions)
+                }
+            }
         }
-
     }
 }
 
@@ -196,6 +204,12 @@ fun RecipeDetailScreen(recipe: Recipe) {
 @Composable
 fun GreetingPreview() {
     RecipeTheme {
-        RecipeApp()
+        RecipeDetailScreen(
+            recipe = Recipe(
+                name = "pasta",
+                ingredients = listOf("tomato", "pasta", "carrot"),
+                instructions = ""
+            )
+        )
     }
 }
