@@ -75,7 +75,8 @@ data class Recipe(
 )
 
 val recipes = listOf(
-    Recipe("Pasta", listOf("Pasta", "Tomato Sauce"), "Cook pasta and mix with tomato sauce.")
+    Recipe("Pasta", listOf("Pasta", "Tomato Sauce"), "Cook pasta and mix with tomato sauce."),
+    Recipe("Salad", listOf("Lettuce", "Tomato", "Cucumber"), "Chop vegetables and mix in a bowl.")
 )
 
 @Composable
